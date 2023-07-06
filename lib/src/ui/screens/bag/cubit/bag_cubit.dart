@@ -12,11 +12,12 @@ class BagCubit extends Cubit<BagState> {
 
   final BagUseCase _bagUseCase;
 
+  /// Initialize the bag state by fetching the user's shopping bag and calculating the total price.
   void init() async {
     try {
       final bag = await _bagUseCase.getUserShoppingBag();
 
-      final totlaPrice =
+      final totalPrice =
           bag.fold(0.0, (double previousValue, BagModel element) {
         double price =
             previousValue + (element.product.price * element.quantity);
@@ -25,7 +26,7 @@ class BagCubit extends Cubit<BagState> {
 
       emit(state.copyWith(
         bag: bag,
-        totalPrice: totlaPrice,
+        totalPrice: totalPrice,
         status: ScreenStatus.success,
       ));
     } on FirebaseException catch (e) {
@@ -39,6 +40,7 @@ class BagCubit extends Cubit<BagState> {
     }
   }
 
+  /// Remove an item from the bag based on the provided index.
   void removeFromBag(int index) async {
     emit(state.copyWith(removeStatus: RemoveFromBagStatus.success));
     try {
@@ -74,6 +76,7 @@ class BagCubit extends Cubit<BagState> {
     }
   }
 
+  /// Change the remove status back to the initial state.
   void changeRemoveStatus() {
     emit(state.copyWith(removeStatus: RemoveFromBagStatus.initial));
   }

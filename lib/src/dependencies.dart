@@ -14,8 +14,9 @@ import 'package:clothing_store_firestore_crud/src/domain/usecase/categorie_useca
 import 'package:clothing_store_firestore_crud/src/domain/usecase/product_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// List of RepositoryProvider widgets for building repositories
 List<RepositoryProvider> buildRepositories = [
-  // Repositorys
+  // Repository providers
   RepositoryProvider<ProductRepositoryInterface>(
     create: (context) => ProductRepositoryImpl(),
   ),
@@ -32,7 +33,7 @@ List<RepositoryProvider> buildRepositories = [
     create: (context) => LocalRepositoryImpl(),
   ),
 
-  // UseCase
+  // UseCase providers
   RepositoryProvider<ProductUseCase>(
     create: (context) => ProductUseCase(
       context.read(),

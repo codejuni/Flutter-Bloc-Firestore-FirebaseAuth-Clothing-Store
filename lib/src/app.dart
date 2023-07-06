@@ -9,19 +9,22 @@ import 'package:clothing_store_firestore_crud/src/ui/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// The root widget of the application
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // Create repositories using MultiRepositoryProvider
     return MultiRepositoryProvider(
       providers: buildRepositories,
       child: MultiBlocProvider(
         providers: [
+          // Provide SplashCubit to initialize the app
           BlocProvider(
             create: (context) => SplashCubit()..init(),
           ),
+          // Provide HomeCubit for the home screen
           BlocProvider(
             create: (context) => HomeCubit(
               context.read(),
@@ -29,11 +32,13 @@ class MyApp extends StatelessWidget {
               context.read(),
             )..init(),
           ),
+          // Provide DetailsCubit for the details screen
           BlocProvider(
             create: (context) => DetailsCubit(
               context.read(),
             ),
           ),
+          // Provide ProductsCubit for the products screen
           BlocProvider(
             create: (context) => ProductsCubit(
               context.read(),

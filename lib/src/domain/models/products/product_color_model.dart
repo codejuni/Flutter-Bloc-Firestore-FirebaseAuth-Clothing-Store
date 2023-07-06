@@ -1,37 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
+// Model class representing a product color
 class ProductColorModel {
   final String color;
   final List<String> images;
   final List<String> sizes;
 
+  // Constructor for creating a ProductColorModel instance
   ProductColorModel({
     required this.color,
     required this.images,
     required this.sizes,
   });
 
-  ProductColorModel copyWith({
-    String? color,
-    List<String>? images,
-    List<String>? sizes,
-  }) {
-    return ProductColorModel(
-      color: color ?? this.color,
-      images: images ?? this.images,
-      sizes: sizes ?? this.sizes,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'color': color,
-      'images': images.map((e) => e.toString()).toList(),
-      'sizes': sizes.map((e) => e.toString()).toList(),
-    };
-  }
-
+  // Factory method for creating a ProductColorModel instance from a map
   factory ProductColorModel.fromMap(Map<String, dynamic> map) {
     return ProductColorModel(
       color: map['color'] as String,
@@ -39,9 +21,4 @@ class ProductColorModel {
       sizes: (map['sizes'] as List).map((e) => e.toString()).toList(),
     );
   }
-
-  //String toJson() => json.encode(toMap());
-
-  factory ProductColorModel.fromJson(String source) =>
-      ProductColorModel.fromMap(json.decode(source));
 }

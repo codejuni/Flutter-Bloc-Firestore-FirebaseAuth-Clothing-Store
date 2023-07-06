@@ -2,6 +2,7 @@ import 'package:clothing_store_firestore_crud/src/domain/models/exception_model.
 import 'package:clothing_store_firestore_crud/src/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
+// Displays a custom dialog with accept and cancel buttons
 void customDialogAcceptCancel({
   required BuildContext context,
   required ExceptionModel exception,
@@ -24,10 +25,12 @@ void customDialogAcceptCancel({
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Display the title of the exception
               Text(
                 exception.title,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
+              // Display the message of the exception
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Text(
@@ -45,7 +48,9 @@ void customDialogAcceptCancel({
                         text: 'Cancel',
                         textColor: Colors.white,
                         onTap: () {
+                          // Call the changeState callback
                           changeState();
+                          // Close the dialog
                           Navigator.pop(context);
                         },
                       ),
@@ -55,8 +60,11 @@ void customDialogAcceptCancel({
                       child: CustomButton(
                         text: 'Accept',
                         onTap: () {
+                          // Call the changeState callback
                           changeState();
+                          // Close the dialog
                           Navigator.pop(context);
+                          // Call the accept callback
                           accept();
                         },
                       ),

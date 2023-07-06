@@ -31,12 +31,15 @@ class BagState extends Equatable {
     );
   }
 
+  /// Override this getter to enable the string representation of the state for debugging purposes.
   @override
   bool? get stringify => true;
 
+  /// Override this getter to provide a list of properties used for equality comparison.
   @override
   List<Object?> get props => [bag, status, exception, totalPrice];
 
+  /// Create a new `BagState` instance with updated values.
   BagState copyWith({
     List<BagModel>? bag,
     ScreenStatus? status,

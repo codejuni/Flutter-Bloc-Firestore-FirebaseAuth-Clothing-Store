@@ -1,9 +1,11 @@
+// Model class representing a user request
 class UserRequest {
   final String name;
   final String surname;
   final String email;
   final String password;
 
+  // Constructor for creating a UserRequest instance
   UserRequest({
     required this.name,
     required this.surname,
@@ -11,6 +13,7 @@ class UserRequest {
     required this.password,
   });
 
+  // Convert UserRequest instance to a map
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,

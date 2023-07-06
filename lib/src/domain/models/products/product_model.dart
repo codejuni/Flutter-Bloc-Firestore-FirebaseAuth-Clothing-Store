@@ -2,6 +2,7 @@
 import 'package:clothing_store_firestore_crud/src/domain/models/products/product_color_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Model class representing a product
 class ProductModel {
   final String? id;
   final String name;
@@ -9,6 +10,7 @@ class ProductModel {
   final double price;
   final List<ProductColorModel> colors;
 
+  // Constructor for creating a ProductModel instance
   ProductModel({
     this.id,
     required this.name,
@@ -17,18 +19,9 @@ class ProductModel {
     required this.colors,
   });
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'name': name,
-      'categorie': categorie,
-      'price': price,
-      'colors': colors.map((x) => x.toMap()).toList(),
-    };
-  }
-
+  // Factory method for creating a ProductModel instance from a QueryDocumentSnapshot
   factory ProductModel.fromMap(
-    QueryDocumentSnapshot<Map<String, dynamic>> doc,
-  ) {
+      QueryDocumentSnapshot<Map<String, dynamic>> doc) {
     final map = doc.data();
 
     return ProductModel(
@@ -42,6 +35,7 @@ class ProductModel {
     );
   }
 
+  // Factory method for creating a ProductModel instance from a DocumentSnapshot
   factory ProductModel.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
     final map = doc.data()!;
 
@@ -56,6 +50,7 @@ class ProductModel {
     );
   }
 
+  // Factory method for creating an initial empty ProductModel instance
   factory ProductModel.initial() {
     return ProductModel(
       id: '',

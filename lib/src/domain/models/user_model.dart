@@ -1,8 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Model class representing a user
 class UserModel {
   final String? token;
   final String name;
@@ -10,6 +9,7 @@ class UserModel {
   final String image;
   final String email;
 
+  // Constructor for creating a UserModel instance
   const UserModel({
     this.token,
     required this.name,
@@ -18,16 +18,18 @@ class UserModel {
     required this.email,
   });
 
+  // Factory method for creating an initial UserModel instance
   factory UserModel.initial() {
     return const UserModel(
       name: 'Guest',
       surname: '',
       image: 'https://cdn-icons-png.flaticon.com/128/599/599305.png',
-      email: 'example@email.com',
+      email: '',
       token: '',
     );
   }
 
+  // Copy method to create a new UserModel instance with updated properties
   UserModel copyWith({
     String? token,
     String? name,
@@ -44,15 +46,7 @@ class UserModel {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'name': name,
-      'surname': surname,
-      'image': image,
-      'email': email,
-    };
-  }
-
+  // Factory method for creating a UserModel instance from a DocumentSnapshot
   factory UserModel.fromMap(DocumentSnapshot<Map<String, dynamic>> doc) {
     final map = doc.data()!;
 
@@ -63,6 +57,4 @@ class UserModel {
       email: map['email'] as String,
     );
   }
-
-  String toJson() => json.encode(toMap());
 }

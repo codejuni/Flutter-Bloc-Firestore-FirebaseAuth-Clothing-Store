@@ -3,11 +3,14 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Model class representing a bag request
 class BagRequest {
   final String token;
   final String idProduct;
   final int size;
   final int color;
+
+  // Constructor for creating a BagRequest instance
   BagRequest({
     required this.token,
     required this.idProduct,
@@ -15,6 +18,7 @@ class BagRequest {
     required this.color,
   });
 
+  // Convert BagRequest instance to a map
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'idProduct':
@@ -25,5 +29,6 @@ class BagRequest {
     };
   }
 
+  // Convert BagRequest instance to a JSON string
   String toJson() => json.encode(toMap());
 }

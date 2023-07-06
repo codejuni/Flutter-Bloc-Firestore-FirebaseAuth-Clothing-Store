@@ -67,24 +67,6 @@ class RoutesPage {
           settings,
         );
 
-      /* case RoutesName.login:
-        return pushNamedWithSlideAnimation(
-          const LoginScreen(),
-          settings,
-        );
-
-      case RoutesName.register:
-        return pushNamedWithSlideAnimation(
-          const RegisterScreen(),
-          settings,
-        );
-
-      case RoutesName.home:
-        return pushNamedWithSlideAnimation(
-          const MessagesScreen(),
-          settings,
-        ); */
-
       default:
     }
 
