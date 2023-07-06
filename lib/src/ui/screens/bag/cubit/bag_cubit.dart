@@ -1,5 +1,6 @@
 import 'package:clothing_store_firestore_crud/src/domain/models/bag_model.dart';
 import 'package:clothing_store_firestore_crud/src/domain/models/exception_model.dart';
+import 'package:clothing_store_firestore_crud/src/domain/status/delete_item_status.dart';
 import 'package:clothing_store_firestore_crud/src/domain/status/screen_status.dart';
 import 'package:clothing_store_firestore_crud/src/domain/usecase/bag_usecase.dart';
 import 'package:clothing_store_firestore_crud/src/ui/screens/bag/cubit/bag_state.dart';
@@ -36,5 +37,44 @@ class BagCubit extends Cubit<BagState> {
         ),
       ));
     }
+  }
+
+  void removeFromBag(int index) async {
+    emit(state.copyWith(removeStatus: RemoveFromBagStatus.success));
+    try {
+      await _bagUseCase.removeFromBag(index);
+
+      final bagList = state.bag;
+      bagList.removeAt(index);
+
+      emit(state.copyWith(
+        removeStatus: RemoveFromBagStatus.success,
+        exception: ExceptionModel(
+          title: 'Success!',
+          message: 'A product has been removed from your shopping bag',
+        ),
+        bag: bagList,
+      ));
+    } on FirebaseException catch (e) {
+      emit(state.copyWith(
+        removeStatus: RemoveFromBagStatus.error,
+        exception: ExceptionModel(
+          title: 'Error!',
+          message: e.message.toString(),
+        ),
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        removeStatus: RemoveFromBagStatus.error,
+        exception: ExceptionModel(
+          title: 'Error!',
+          message: e.toString(),
+        ),
+      ));
+    }
+  }
+
+  void changeRemoveStatus() {
+    emit(state.copyWith(removeStatus: RemoveFromBagStatus.initial));
   }
 }

@@ -28,4 +28,9 @@ class BagUseCase {
     );
     await _bagRepositoryInterface.addToBag(request);
   }
+
+  Future<void> removeFromBag(int index) async {
+    String token = await _localRepositoryInterface.getTokenUser();
+    await _bagRepositoryInterface.removeFromBag(token, index);
+  }
 }

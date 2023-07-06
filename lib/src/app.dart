@@ -3,7 +3,6 @@ import 'package:clothing_store_firestore_crud/src/ui/routes/route_name.dart';
 import 'package:clothing_store_firestore_crud/src/ui/routes/route_page.dart';
 import 'package:clothing_store_firestore_crud/src/ui/screens/details/cubit/details_cubit.dart';
 import 'package:clothing_store_firestore_crud/src/ui/screens/home/cubit/home_cubit.dart';
-import 'package:clothing_store_firestore_crud/src/ui/screens/login/cubit/login_cubit.dart';
 import 'package:clothing_store_firestore_crud/src/ui/screens/products/cubit/products_cubit.dart';
 import 'package:clothing_store_firestore_crud/src/ui/screens/splash/cubit/splash_cubit.dart';
 import 'package:clothing_store_firestore_crud/src/ui/themes/app_theme.dart';
@@ -32,11 +31,6 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => DetailsCubit(
-              context.read(),
-            ),
-          ),
-          BlocProvider(
-            create: (context) => LoginCubit(
               context.read(),
             ),
           ),

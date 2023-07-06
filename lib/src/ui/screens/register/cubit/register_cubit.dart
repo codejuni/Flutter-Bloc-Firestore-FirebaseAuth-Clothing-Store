@@ -5,26 +5,56 @@ import 'package:clothing_store_firestore_crud/src/ui/screens/register/cubit/regi
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Registercubit extends Cubit<RegisterState> {
-  Registercubit(this._authUseCase) : super(RegisterState.initial());
+class RegisterCubit extends Cubit<RegisterState> {
+  RegisterCubit(this._authUseCase) : super(RegisterState.initial());
 
   final AuthUseCase _authUseCase;
 
   void register() async {
     try {
-      await _authUseCase.signUp(
-        email: state.emailController.text,
-        password: state.passController.text,
-        confirmPass: state.confirmPassController.text,
-        name: state.nameController.text,
-        surname: state.surnameController.text,
-      );
-      emit(state.copyWith(status: ScreenStatus.success));
+      String email = state.emailController.text;
+      String name = state.nameController.text;
+      String surname = state.surnameController.text;
+      String password = state.passController.text;
+      String confirmPassword = state.confirmPassController.text;
+
+      if (email.isEmpty ||
+          name.isEmpty ||
+          surname.isEmpty ||
+          password.isEmpty ||
+          confirmPassword.isEmpty) {
+        emit(state.copyWith(
+          status: ScreenStatus.error,
+          exception: ExceptionModel(
+            title: 'Error!',
+            message: 'All fields need to be completed',
+          ),
+        ));
+      } else {
+        if (password == confirmPassword) {
+          await _authUseCase.signUp(
+            email: email,
+            password: password,
+            confirmPass: confirmPassword,
+            name: name,
+            surname: surname,
+          );
+          emit(state.copyWith(status: ScreenStatus.success));
+        } else {
+          emit(state.copyWith(
+            status: ScreenStatus.error,
+            exception: ExceptionModel(
+              title: 'Error!',
+              message: 'Passwords are not the same',
+            ),
+          ));
+        }
+      }
     } on FirebaseAuthException catch (e) {
       emit(state.copyWith(
         status: ScreenStatus.error,
         exception: ExceptionModel(
-          title: 'Error',
+          title: 'Error!',
           message: e.message.toString(),
         ),
       ));
@@ -32,10 +62,14 @@ class Registercubit extends Cubit<RegisterState> {
       emit(state.copyWith(
         status: ScreenStatus.error,
         exception: ExceptionModel(
-          title: 'Error',
+          title: 'Error!',
           message: e.toString(),
         ),
       ));
     }
+  }
+
+  void changeStatus() {
+    emit(state.copyWith(status: ScreenStatus.initial));
   }
 }

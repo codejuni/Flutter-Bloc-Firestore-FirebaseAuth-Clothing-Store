@@ -18,21 +18,7 @@ class BagRepositoryImpl extends BagRepositoryInterface {
     final List<Map<String, dynamic>> currentBag =
         List<Map<String, dynamic>>.from(bag);
     currentBag.add(request.toMap());
-
-    /* final bagData = bagSnapshot.data();
-    if (bagData != null) {
-      final bag = bagData['bag'];
-      if (bag is List<dynamic>) {
-        final List<Map<String, dynamic>> currentBag =
-            List<Map<String, dynamic>>.from(bag);
-        currentBag.add(request.toMap());
-
-        await bagSnapshot.reference.update({'bag': currentBag});
-      } else {
-        print('Hay un error');
-        // Si el campo 'bag' no es una lista válida, puedes manejarlo de acuerdo a tus necesidades
-      }
-    } */
+    await bagSnapshot.reference.update({'bag': currentBag});
   }
 
   @override
@@ -60,5 +46,20 @@ class BagRepositoryImpl extends BagRepositoryInterface {
     }
 
     return bagList;
+  }
+
+  @override
+  Future<void> removeFromBag(String token, int index) async {
+    final bagSnapshot =
+        await FirebaseFirestore.instance.collection(_users).doc(token).get();
+    final bagData = bagSnapshot.data();
+    final bag = bagData!['bag'];
+    final List<Map<String, dynamic>> currentBag =
+        List<Map<String, dynamic>>.from(bag);
+
+    if (index >= 0 && index < currentBag.length) {
+      currentBag.removeAt(index);
+      await bagSnapshot.reference.update({'bag': currentBag});
+    }
   }
 }

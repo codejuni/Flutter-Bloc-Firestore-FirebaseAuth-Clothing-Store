@@ -39,14 +39,9 @@ class AuthUseCase {
     required String name,
     required String surname,
   }) async {
-    if (password == confirmPass) {
-      final request = UserRequest(
-        email: email,
-        surname: surname,
-        name: name,
-        password: password,
-      );
-      await _authRepositoryInterface.signUp(request);
-    }
+    final request = UserRequest(
+        email: email, surname: surname, name: name, password: password);
+    String token = await _authRepositoryInterface.signUp(request);
+    _localRepositoryInterface.setTokenUser(token);
   }
 }
